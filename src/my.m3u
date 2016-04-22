@@ -1,0 +1,29 @@
+#EXTM3U
+#EXTINF:0  tvg-id="1"  tvg-name="DISCOVERY HD" , DISCOVERY HD
+http://provider-url/LIVE/H01/CANAL351/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="2"  tvg-name="HISTORY" , HISTORY
+http://provider-url/LIVE/H01/CANAL353/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="3"  tvg-name="NAT GEO WILD" , NAT GEO WILD
+http://provider-url/LIVE/H01/CANAL355/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="4"  tvg-name="TLC HD" , TLC HD
+http://provider-url/LIVE/H01/CANAL356/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="5"  tvg-name="DISCOVERY" , DISCOVERY
+http://provider-url/LIVE/H01/CANAL371/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="6"  tvg-name="ANIMAL PLANET"  group-title="ANIMAL_WILDLIFE" , ANIMAL PLANET
+http://provider-url/LIVE/H01/CANAL373/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="7"  tvg-name="NAT GEO" , NAT GEO
+http://provider-url/LIVE/H01/CANAL377/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="8"  tvg-name="TURBO" , TURBO
+http://provider-url/LIVE/H01/CANAL379/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="9"  tvg-name="D SCI" , D SCI
+http://provider-url/LIVE/H01/CANAL381/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="10"  tvg-name="D. CIVILIZATION"  tvg-logo="http://vignette1.wikia.nocookie.net/logopedia/images/4/41/297922_10151583699993586_1439916141_n.jpg/revision/latest/scale-to-width-down/150?cb=20131006231056&format=webp"  group-title="ENTERTAINMENT" , D. CIVILIZATION
+http://provider-url/LIVE/H01/CANAL382/PROFILE03.m3u8?
+#EXTINF:0  tvg-id="11"  tvg-name="First channel"  tvg-logo="http://a.abcnews.go.com/images/US/abc_news_default_2000x2000_update_16x9t_384.jpg"  group-title="NEWS"  tvg-country="US"  tvg-language="English" , First channel
+http://urlprovider/i/abc_live4@136330/index_800_av-b.m3u8
+#EXTINF:0  tvg-id="12"  tvg-name="Second channel"  tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/5/58/American_Broadcasting_Company_2013_Logo.png/150px-American_Broadcasting_Company_2013_Logo.png"  group-title="NEWS"  tvg-country="US"  tvg-language="English" , Second channel
+http://urlprovider/live/LGxEt-y0SRNkEsBwuiUn7g/1461358563/900150983cd24fb0d6963f7d28e17f72.m3u8
+#EXTINF:0  tvg-id="13"  tvg-name="Animal Island"  tvg-logo="https://logos/animal-islando.png"  group-title="ANIMAL_WILDLIFE"  tvg-country="AR"  tvg-language="Spanish" , Animal Island
+http://urlprovider/live/animal-island.m3u8
+#EXTINF:0  tvg-id="14"  tvg-name="Movies Selection Argentina"  tvg-logo="https://logos/movies.png"  group-title="ENTERTAINMENT"  tvg-country="AR"  tvg-language="English" , Movies Selection Argentina
+http://urlprovider/live/movies-selection.m3u8
