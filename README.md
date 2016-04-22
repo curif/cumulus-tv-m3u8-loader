@@ -13,7 +13,9 @@ Is a m3u8 parser and conversor to cumulus-tv json file format for Google Drive, 
 ## Install
 
     git clone https://github.com/curif/cumulus-tv-m3u8-loader.git
-    cd cumulus-tv-m3u8-loader/src
+    cd cumulus-tv-m3u8-loader
+    pip install -r requires.txt 
+    cd src
     cp configToCopy.py config.py
 
 ## Configuration
