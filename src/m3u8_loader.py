@@ -11,7 +11,7 @@ import json
 try:
   import config as config
 except ImportError:
-  print "config.py file not found! to create one copy the config_example.py over config.py and modify."
+  print "config.py file not found! to create one copy the configToCopy.py over config.py and modify."
   sys.exit(-1)
 
 """

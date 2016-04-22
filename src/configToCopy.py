@@ -11,6 +11,9 @@ config = {
       #from file:
       "url": "file:///home/desarrollo/desarr/cumulus-tv-m3u8-loader/src/test.m3u",
 
+      #some m3u url providers add some extra data at end url:
+      "m3u-url-endchar": "?",
+
       #map the group-title extinf data to android tv genres,
       # see: http://developer.android.com/reference/android/media/tv/TvContract.Programs.Genres.html
       "genres-map": {
@@ -29,8 +32,6 @@ config = {
       #http url or file name in the form: "file:///home/<user>/blah/mifile.m3u"
       "url": "https://raw.githubusercontent.com/curif/cumulus-tv-m3u8-loader/develop/src/my.m3u",
 
-      #some m3u url providers add some extra data at end url:
-      "m3u-url-endchar": "|",
 
       #filter to include m3u data (all lowercase), None for ignore.
       "filters": {
