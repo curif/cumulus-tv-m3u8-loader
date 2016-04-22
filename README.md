@@ -10,8 +10,6 @@ Is a m3u8 parser and conversor to cumulus-tv json file format for Google Drive, 
 * Can save cumulus-tv json file format to your filesystem, you can upload to your drive manually later.
 * You can automatically upload to your google drive (need app permissions, see below)
 
-## 
-
 ## Configuration
 
 Go to src/config.py and change the configuration to point to your m3u8 online providers o files in your filesystem. Define the outputs as needed.
@@ -32,7 +30,7 @@ You can activate/deactivate configuration options using the `active` key (settin
 
 #### providers Section
 
-### Note:
+#### Note:
 
 Before write each `providers` section, you will need to study the m3u8 source to understand what to add and what to exclude.
 
