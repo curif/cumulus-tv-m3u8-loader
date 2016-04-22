@@ -3,3 +3,7 @@
 http://urlprovider/i/abc_live4@136330/index_800_av-b.m3u8
 #EXTINF:0  tvg-id="chan-102"  tvg-name="Second channel"  tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/5/58/American_Broadcasting_Company_2013_Logo.png/150px-American_Broadcasting_Company_2013_Logo.png"  group-title="NEWS"  tvg-country="US"  tvg-language="English" , Second channel
 http://urlprovider/live/LGxEt-y0SRNkEsBwuiUn7g/1461358563/900150983cd24fb0d6963f7d28e17f72.m3u8
+#EXTINF:0  tvg-id="chan-103"  tvg-name="Animal island"  tvg-logo="https://logos/animal-islando.png"  group-title="animal"  tvg-country="AR"  tvg-language="Spanish", Animal Island
+http://urlprovider/live/animal-island.m3u8
+#EXTINF:0  tvg-id="chan-104"  tvg-name="Movies Selection"  tvg-logo="https://logos/movies.png"  group-title="entertainment"  tvg-country="AR"  tvg-language="English", Movies Selection Argentina
+http://urlprovider/live/movies-selection.m3u8
