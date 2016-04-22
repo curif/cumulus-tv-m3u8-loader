@@ -22,9 +22,9 @@ Modify src/config.py. Change the configuration to point to your m3u8 online prov
 Define the outputs as needed.
 
 ## run
-
-   cd cumulus-tv-m3u8-loader/src
-   python ./m3u8_loader.py
+    
+    cd cumulus-tv-m3u8-loader/src
+    python ./m3u8_loader.py
 
 ### config.py structure:
 
