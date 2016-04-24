@@ -7,6 +7,8 @@ import pprint
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import json
+import os
+import subprocess, threading
 
 try:
   import config as config
@@ -47,6 +49,35 @@ countryRe = re.compile(country_regex)
 idRe = re.compile(id_regex)
 groupRe = re.compile(group_regex)
 
+
+class Command(object):
+  """
+  Thanks: http://stackoverflow.com/questions/1191374/using-module-subprocess-with-timeout
+  """
+  def __init__(self, cmd):
+    self.cmd = cmd
+    self.process = None
+
+  def run(self, timeout):
+    ret = 0
+    def target():
+      print "RUN:" + self.cmd
+      self.process = subprocess.Popen(self.cmd, shell=True)
+      self.process.communicate()
+
+    thread = threading.Thread(target=target)
+    thread.start()
+
+    thread.join(timeout)
+    if thread.is_alive():
+      self.process.terminate()
+      thread.join()
+      print "TIMEOUT"
+      ret = 256
+    else:
+      ret = self.process.returncode
+    print "RETURN: " + str(ret)
+    return ret
 
 def loadm3u(url):
   hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -101,11 +132,18 @@ def possibleGenres(cumulustv):
   return retGenres
 
 
+def validate(validation, url):
+  cmd = Command(str.replace(validation["command"], "__file__", url))
+  ret = cmd.run(timeout=validation.get("timeout-secs", 3))
+  return ret in validation["return-code-error"]
+
+
 def process(m3u, provider, cumulustv, contStart=None):
 
   match = m3uRe.findall(m3u)
   urlEndChar = config.config["providers"][provider].get("m3u-url-endchar", "")
   filters = config.config["providers"][provider].get("filters", None)
+  validation = config.config["providers"][provider].get("validation", None)
 
   if contStart is None:
     contStart=0
@@ -126,23 +164,33 @@ def process(m3u, provider, cumulustv, contStart=None):
          filters.get("lang", None) is not None and lang.lower() in filters["lang"] and \
          filters.get("group", None) is not None and group.lower() in filters["group"]):
 
-      contStart += 1
-
       if urlEndChar and urlEndChar != "":
         url = url.split(urlEndChar)[0]
 
-      genres = mapGenres(group, provider)
+      valid = True
+      if validation and "active" and validation.get("active", False):
+        try:
+          valid = validate(validation, url)
+        except Exception as e:
+          valid = False
+          print "Validation error:" + str(e)
+          pass
 
-      cumulusData = {
-        "number": str(contStart),
-        "name": name,
-        "logo": logo,
-        "url": url,
-        "genres": genres,
-        "lang": lang, #extra data not defined in cumulus tv
-        "country": country #extra data not defined in cumulus tv
-      }
-      cumulustv["channels"].append(cumulusData)
+      if valid:
+        contStart += 1
+
+        genres = mapGenres(group, provider)
+
+        cumulusData = {
+          "number": str(contStart),
+          "name": name,
+          "logo": logo,
+          "url": url,
+          "genres": genres,
+          "lang": lang, #extra data not defined in cumulus tv
+          "country": country #extra data not defined in cumulus tv
+        }
+        cumulustv["channels"].append(cumulusData)
 
   return contStart
 
