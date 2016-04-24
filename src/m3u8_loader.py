@@ -54,9 +54,10 @@ class Command(object):
   """
   Thanks: http://stackoverflow.com/questions/1191374/using-module-subprocess-with-timeout
   """
-  def __init__(self, cmd):
+  def __init__(self, cmd, killTimeoutCmd=None):
     self.cmd = cmd
     self.process = None
+    self.killTimeoutCmd = killTimeoutCmd
 
   def run(self, timeout):
     ret = 0
@@ -74,6 +75,8 @@ class Command(object):
       thread.join()
       print "TIMEOUT"
       ret = 256
+      if self.killTimeoutCmd is not None:
+        os.system(self.killTimeoutCmd)
     else:
       ret = self.process.returncode
     print "RETURN: " + str(ret)
@@ -133,7 +136,8 @@ def possibleGenres(cumulustv):
 
 
 def validate(validation, url):
-  cmd = Command(str.replace(validation["command"], "__file__", url))
+  cmd = Command(str.replace(validation["command"], "__file__", url),
+                killTimeoutCmd=validation.get("timeout-kill-command", None))
   ret = cmd.run(timeout=validation.get("timeout-secs", 3))
   return ret in validation["return-code-error"]
 
