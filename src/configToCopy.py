@@ -25,6 +25,12 @@ config = {
         "family": "FAMILY_KIDS",
         "animal": "ANIMAL_WILDLIFE"
       },
+      "validation": {
+        "active": True,
+        "command": "avprobe __file__",
+        "return-code-error": [1, 256],
+        "timeout-secs": 3
+      },
     },
     "MyGithubFileTest": {
       "active": True,
@@ -44,6 +50,12 @@ config = {
           "family",
           "animal"
         ]
+      },
+      "validation": {
+        "active": True,
+        "command": "avprobe __file__",
+        "return-code-error": [1, 256],
+        "timeout-secs": 3
       },
       #map the group-title extinf data to android tv genres,
       # see: http://developer.android.com/reference/android/media/tv/TvContract.Programs.Genres.html
