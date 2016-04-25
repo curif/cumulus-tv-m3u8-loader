@@ -9,6 +9,8 @@ from pydrive.drive import GoogleDrive
 import json
 import os
 import subprocess, threading
+import logging
+import logging.handlers
 
 try:
   import config as config
@@ -97,7 +99,8 @@ def loadm3u(url):
   if not '#EXTM3U' in data:
     raise Exception(url + " is not a m3u8 file.")
 
-  return data.encode('utf-8')
+  #return data.encode('utf-8')
+  return data
 
 
 def regParse(parser, data):
@@ -172,13 +175,15 @@ def process(m3u, provider, cumulustv, contStart=None):
         url = url.split(urlEndChar)[0]
 
       valid = True
-      if validation and "active" and validation.get("active", False):
+      if validation and validation.get("active", False):
         try:
           valid = validate(validation, url)
         except Exception as e:
           valid = False
           print "Validation error:" + str(e)
           pass
+
+      logging.info(" - Channel: " + name + " - valid: " + str(valid) + " " + url)
 
       if valid:
         contStart += 1
@@ -195,6 +200,11 @@ def process(m3u, provider, cumulustv, contStart=None):
           "country": country #extra data not defined in cumulus tv
         }
         cumulustv["channels"].append(cumulusData)
+
+        logging.info("     - assigned number: " + str(contStart))
+        logging.info("     - genres         : " + str(genres))
+        logging.info("     - language       : " + str(lang))
+        logging.info("     - country        : " + str(country))
 
   return contStart
 
@@ -220,21 +230,55 @@ def write2File(fd, cumulustv):
 
   return
 
+
+def logStart():
+  """
+  start logging
+  """
+
+  if "log" not in config.config:
+    return
+
+  configLog = config.config["log"]
+  fileName = configLog.get("file", "m3u8_loader.log")
+
+  # inicia el logging
+  logging.basicConfig(
+    filename=fileName,
+    level=int(configLog.get("level",10)),
+    format='%(asctime)s - %(name)s: %(levelname)s: %(message)s'
+  )
+
+  # Se configura para que sea rotativo
+  hand = logging.handlers.RotatingFileHandler(fileName,
+                                              maxBytes=configLog.get('maxBytes', 100*1024),
+                                              backupCount=configLog.get('backupCount', 5))
+
+  logger = logging.getLogger('root')
+  logger.addHandler(hand)
+
+  return
+
+
 #-------------------------------------------------------------------------------
 # process
 #-------------------------------------------------------------------------------
 
+logStart()
+
+logging.info("start")
+
 cumulustv = {"channels": [],
-             "timestamp": time.time()}
+             "timestamp": str(time.time())}
 startAt = 0  #first channel number - 1
 
 for provider, providerData in config.config["providers"].iteritems():
   if providerData.get("active", False):
-    print "Provider: " + provider
+    logging.info("Provider: " + provider + " ======================")
     try:
       m3uContent = loadm3u(providerData["url"])
     except Exception as e:
-      print str(e)
+      logging.error("loading " + providerData["url"] + " - " + str(e))
     else:
       startAt = int(providerData.get("first-channel-number", startAt))
       startAt += process(m3uContent, provider, cumulustv, startAt)
@@ -245,7 +289,7 @@ for provider, providerData in config.config["providers"].iteritems():
 
       #pp.pprint(cumulustv)
 
-print "Channels: " + str(startAt)
+logging.info("END - Channels: " + str(startAt))
 
 #write to file
 m3uFile = config.config["outputs"].get("m3u-file", None)
@@ -253,11 +297,11 @@ if m3uFile:
   if m3uFile.get("active", False):
     try:
       fileName = m3uFile["file-name"]
+      logging.info("Write to file:" + fileName)
       with open(fileName, "w") as fd:
         write2File(fd, cumulustv)
-      print "Output file: " + fileName
     except Exception as e:
-      print "can't open/write file: " + str(e)
+      logging.error("can't open/write file: " + str(e))
       sys.exit(-1)
 
 #send to DRIVE
@@ -301,11 +345,12 @@ jsonOutput = config.config["outputs"].get("json-file", None)
 if jsonOutput:
   if jsonOutput.get("active", False):
     fileName = jsonOutput.get("file-name", "cumulustv.json")
+    logging.info("Cumulus tv json - write to file:" + fileName)
     jsonContent = json.dumps(cumulustv, ensure_ascii=False)
     try:
+      logging.info("Write to file:" + fileName)
       with open(fileName, "w") as fd:
         fd.write(jsonContent)
-      print fileName + " saved."
     except Exception as e:
-      print "ERROR saving json file: " + str(e)
+      logging.error("ERROR saving json file: " + str(e))
       sys.exit(-1)

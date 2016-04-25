@@ -33,7 +33,8 @@ Define the outputs as needed.
 ``` python
 { 
  "providers": {},
- "outputs": {}
+ "outputs": {},
+ "log": {}
 }
 ```
 * `providers`: define the access file/url, conversion and filters for the m3u8 load and parse. Multiple providers can be processed.
@@ -104,7 +105,7 @@ providers keys:
     * `group`: filter the `group-title` tag. For example a list `["movie", "news", "documentary"]` will exclude "adult" content.
   * `validation`: all url in the stream will be checked, for example to check if is online or accessible.
     * `active`: True or False. False to avoid validation.
-    * `command`: command to execute, __file__ will be replaced with the stream url.
+    * `command`: command to execute, `__file__` will be replaced with the stream url.
     * `return-code-error`: error codes array. If the command return value is one of this values, the stream is considered invalid.
     * `timeout-secs`: Timeout in secs. Time to command execution.
     * `timeout-kill-command`: a command to execute when the timeout is reached.
@@ -133,6 +134,24 @@ The output can be a m3u8 file, a cumulus tv json file and a a cumulus tv json fi
   ```
   
 Please configure the `outputs` section as needed. The names are self explanatory.
+
+### logging
+
+```python
+  "log": {
+    'file': "m3u_loader.log",
+    'level': 10,
+    'maxBytes': 500*1024,
+    'backupCount': 5
+  }
+```
+
+Establish logging file:
+
+  * `file`: file name
+  * `level`: python log level number
+  * `maxBytes`: max bytes per log
+  * `backupCount`: log rotation max file count.
 
 ### Google Drive
 
