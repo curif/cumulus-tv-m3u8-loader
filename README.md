@@ -62,6 +62,13 @@ Before write each `providers` section, you will need to study the m3u8 source to
         "family": "FAMILY_KIDS",
         "animal": "ANIMAL_WILDLIFE"
       },
+      "validation": {
+        "active": False,
+        "command": "avprobe \"__file__\"",
+        "return-code-error": [1, 256],
+        "timeout-secs": 3,
+        "timeout-kill-command": "killall -9 avprobe"
+      },
     },
     "MyGithubFileTest": {
       "active": True,
@@ -95,6 +102,12 @@ providers keys:
     * `lang`: language list. For example ["spanish"] will exclude others languages than spanish.
     * `country`: country list.
     * `group`: filter the `group-title` tag. For example a list `["movie", "news", "documentary"]` will exclude "adult" content.
+  * `validation`: all url in the stream will be checked, for example to check if is online or accessible.
+    * `active`: True or False. False to avoid validation.
+    * `command`: command to execute, __file__ will be replaced with the stream url.
+    * `return-code-error`: error codes array. If the command return value is one of this values, the stream is considered invalid.
+    * `timeout-secs`: Timeout in secs. Time to command execution.
+    * `timeout-kill-command`: a command to execute when the timeout is reached.
 
 ### outputs
 
