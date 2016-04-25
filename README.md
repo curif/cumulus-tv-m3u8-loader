@@ -81,7 +81,7 @@ Example:
     },
     "MyGithubFileTest": {
       "active": True,
-      "url": "https://raw.githubusercontent.com/curif/cumulus-tv-m3u8-loader/develop/src/my.m3u",
+      "url": "https://raw.githubusercontent.com/curif/cumulus-tv-m3u8-loader/develop/src/test.m3u",
       "filters": {
         "lang": ["english", "spanish"],
         "country": ["us", "ar", "au"],
