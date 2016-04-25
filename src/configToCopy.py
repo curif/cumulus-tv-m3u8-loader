@@ -73,8 +73,7 @@ config = {
   "outputs": {
     "google-drive": {
       "active": True,
-      "file-name": "cumulus-tv-test.json",
-      "auth-code": ""
+      "file-name": "cumulus-tv-test.json"
     },
     "m3u-file": {
       "active": True,
