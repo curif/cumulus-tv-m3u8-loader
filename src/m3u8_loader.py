@@ -272,7 +272,11 @@ def logStart():
 
 logStart()
 
+logging.info("================================================================================")
+logging.info("================================================================================")
 logging.info("start")
+logging.info("================================================================================")
+logging.info("================================================================================")
 
 cumulustv = {"channels": [],
              "timestamp": str(time.time())}
@@ -295,7 +299,7 @@ for provider, providerData in config.config["providers"].iteritems():
 
       #pp.pprint(cumulustv)
 
-logging.info("END - Channels: " + str(startAt))
+logging.info("END - Channels loaded: " + str(len(urlCollector)))
 
 #write to file
 m3uFile = config.config["outputs"].get("m3u-file", None)
@@ -336,7 +340,7 @@ if driveConfig:
       sys.exit(-1)
 
     fileName = driveConfig.get("file-name", "cumulustv.json")
-    jsonContent = json.dumps(cumulustv, ensure_ascii=False)
+    jsonContent = json.dumps(cumulustv, ensure_ascii=True)
 
     try:
       cumulusTVFile = drive.CreateFile({'title': fileName, 'mimeType': 'application/json'})  # Create GoogleDriveFile instance with title 'Hello.txt'
@@ -362,3 +366,5 @@ if jsonOutput:
     except Exception as e:
       logging.error("ERROR saving json file: " + str(e))
       sys.exit(-1)
+
+logging.info("END -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
