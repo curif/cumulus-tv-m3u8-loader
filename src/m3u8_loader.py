@@ -340,7 +340,7 @@ if driveConfig:
       sys.exit(-1)
 
     fileName = driveConfig.get("file-name", "cumulustv.json")
-    jsonContent = json.dumps(cumulustv, ensure_ascii=False)
+    jsonContent = json.dumps(cumulustv, ensure_ascii=True)
 
     try:
       cumulusTVFile = drive.CreateFile({'title': fileName, 'mimeType': 'application/json'})  # Create GoogleDriveFile instance with title 'Hello.txt'
