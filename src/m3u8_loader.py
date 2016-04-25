@@ -112,6 +112,24 @@ def regParse(parser, data):
   return None
 
 
+def filterByName(names, name):
+  """
+  Verify channel name contains string
+  :param names: names array ["blah", "sese"]
+  :param name: channel name "blah"
+  :return: True if at least one element in array is part of string channel name.
+  """
+  if len(names) == 0:
+    return True
+
+  lowName = name.lower()
+  for n in names:
+    if n.lower() in lowName:
+      return True
+
+  return False
+
+
 def mapGenres(genre, provider):
   ret = ""
   if genre:
@@ -146,6 +164,41 @@ def validate(validation, url):
   return ret not in validation["return-code-error"]
 
 
+def verifyFilters(filters, name, country, group, lang):
+  """
+  @:return True if the channel pass the filter validation
+  """
+
+  if filters is None:
+    return True
+
+  filterCountry = filters.get("country", None)
+  if filterCountry is not None:
+    if country is None or country not in filterCountry:
+      return False
+
+  filterGroup = filters.get("group", None)
+  if filterGroup is not None:
+    if group is None or group not in filterGroup:
+      return False
+
+  filterLang = filters.get("lang", None)
+  if filterLang is not None:
+    if lang is None or lang not in filterLang:
+      return False
+
+  filterName = filters.get("names", None)
+  if filterName:
+    if "include" in filterName:
+      if not filterByName(filterName["include"], name):
+        return False
+    if "exclude" in filterName:
+      if filterByName(filterName["exclude"], name):
+        return False
+
+  return True
+
+
 def process(m3u, provider, cumulustv, contStart=None):
 
   match = m3uRe.findall(m3u)
@@ -167,10 +220,7 @@ def process(m3u, provider, cumulustv, contStart=None):
     if name is None or name == "":
       name = regParse(nameRe, extInfData)
 
-    if filters is None or \
-        (filters.get("country", None) is not None and country.lower() in filters["country"] and \
-         filters.get("lang", None) is not None and lang.lower() in filters["lang"] and \
-         filters.get("group", None) is not None and group.lower() in filters["group"]):
+    if verifyFilters(filters, name, country, group, lang):
 
       if urlEndChar and urlEndChar != "":
         url = url.split(urlEndChar)[0]
@@ -285,6 +335,7 @@ startAt = 0  #first channel number - 1
 for provider, providerData in config.config["providers"].iteritems():
   if providerData.get("active", False):
     logging.info("Provider: " + provider + " ======================")
+    logging.info("url     : " + providerData["url"])
     try:
       m3uContent = loadm3u(providerData["url"])
     except Exception as e:

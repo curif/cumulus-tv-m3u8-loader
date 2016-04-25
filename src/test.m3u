@@ -3,20 +3,20 @@
 http://provider-url/LIVE/H01/CANAL351/PROFILE03.m3u8?
 #EXTINF:-1, HISTORY
 http://provider-url/LIVE/H01/CANAL353/PROFILE03.m3u8?
-#EXTINF:-1, NAT GEO WILD
+#EXTINF:-1, tvg-country="US" group-title="Entertainment", NAT GEO WILD
 http://provider-url/LIVE/H01/CANAL355/PROFILE03.m3u8?
-#EXTINF:-1, TLC HD
+#EXTINF:-1 tvg-country="US" group-title="Entertainment" , TLC HD
 http://provider-url/LIVE/H01/CANAL356/PROFILE03.m3u8?
-#EXTINF:-1, DISCOVERY
+#EXTINF:-1 tvg-country="US" group-title="Entertainment" , DISCOVERY
 http://provider-url/LIVE/H01/CANAL371/PROFILE03.m3u8?
-#EXTINF:-1 group-title="Animal", ANIMAL PLANET
+#EXTINF:-1 group-title="Animal" tvg-country="US", ANIMAL PLANET
 http://provider-url/LIVE/H01/CANAL373/PROFILE03.m3u8?
 #EXTINF:-1, NAT GEO
 http://provider-url/LIVE/H01/CANAL377/PROFILE03.m3u8?
 #EXTINF:-1, TURBO
 http://provider-url/LIVE/H01/CANAL379/PROFILE03.m3u8?
-#EXTINF:-1, D SCI
+#EXTINF:-1 group-title="Animal" tvg-country="US", DE: D SCI
 http://provider-url/LIVE/H01/CANAL381/PROFILE03.m3u8?
-#EXTINF:-1 group-title="Entertainment" tvg-logo="http://vignette1.wikia.nocookie.net/logopedia/images/4/41/297922_10151583699993586_1439916141_n.jpg/revision/latest/scale-to-width-down/150?cb=20131006231056&format=webp", D. CIVILIZATION
+#EXTINF:-1 group-title="Entertainment"  tvg-country="AR" tvg-logo="http://notexist.com/logos/images/4.jpg", D. CIVILIZATION
 http://provider-url/LIVE/H01/CANAL382/PROFILE03.m3u8?
 

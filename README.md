@@ -48,11 +48,13 @@ You can activate/deactivate configuration options using the `active` key (settin
 
 Before write each `providers` section, you will need to study the m3u8 source to understand what to add and what to exclude.
 
+Example:
+
 ``` python
 "providers": {
     "fromArchive": {
       "active": True,
-      "url": "file:///home/desarrollo/desarr/cumulus-tv-m3u8-loader/src/test.m3u",
+      "url": "file:///home/myuser/desarr/cumulus-tv-m3u8-loader/src/test.m3u",
       "m3u-url-endchar": "?",
       "genres-map": {
         "news": "NEWS",
@@ -70,6 +72,12 @@ Before write each `providers` section, you will need to study the m3u8 source to
         "timeout-secs": 3,
         "timeout-kill-command": "killall -9 avprobe"
       },
+      "filters": {
+        "names": {
+            "include": ["food", "horror", "home", "movies"],
+            "exclude": ["DE", "FR", "it", "sport", "tr"]
+        }
+      }
     },
     "MyGithubFileTest": {
       "active": True,
@@ -103,6 +111,9 @@ providers keys:
     * `lang`: language list. For example ["spanish"] will exclude others languages than spanish.
     * `country`: country list.
     * `group`: filter the `group-title` tag. For example a list `["movie", "news", "documentary"]` will exclude "adult" content.
+    * `names`: filter channel names
+      * `include`: array of string to verify, example ["horror", "home"] will match with "The horror channel" and with "home and health", this channels will be included.
+      * `exclude`: inverse of include.
   * `validation`: all url in the stream will be checked, for example to check if is online or accessible.
     * `active`: True or False. False to avoid validation.
     * `command`: command to execute, `__file__` will be replaced with the stream url.
