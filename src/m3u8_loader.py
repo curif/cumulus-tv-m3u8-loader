@@ -51,6 +51,7 @@ countryRe = re.compile(country_regex)
 idRe = re.compile(id_regex)
 groupRe = re.compile(group_regex)
 
+urlCollector = []
 
 class Command(object):
   """
@@ -183,6 +184,9 @@ def process(m3u, provider, cumulustv, contStart=None):
           print "Validation error:" + str(e)
           pass
 
+      #avoid duplicates
+      valid = valid and url not in urlCollector
+
       logging.info(" - Channel: " + name + " - valid: " + str(valid) + " " + url)
 
       if valid:
@@ -200,6 +204,8 @@ def process(m3u, provider, cumulustv, contStart=None):
           "country": country #extra data not defined in cumulus tv
         }
         cumulustv["channels"].append(cumulusData)
+
+        urlCollector.append(url)
 
         logging.info("     - assigned number: " + str(contStart))
         logging.info("     - genres         : " + str(genres))
@@ -338,7 +344,9 @@ if driveConfig:
       cumulusTVFile.Upload()
       print "Uploaded to drive: " + fileName
     except Exception as e:
-      print "Google Drive upload exception: " + str(e)
+      err="Google Drive upload exception: " + str(e)
+      print err
+      logging.error(err)
 
 #send json to disk
 jsonOutput = config.config["outputs"].get("json-file", None)
