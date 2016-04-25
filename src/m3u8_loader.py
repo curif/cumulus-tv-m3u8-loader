@@ -265,17 +265,18 @@ driveConfig = config.config["outputs"].get("google-drive", None)
 if driveConfig:
   if driveConfig.get("active", False):
     gauth = GoogleAuth()
+    gauth.CommandLineAuth()
     #gauth.LocalWebserverAuth() # Creates local webserver and auto handles authentication
-    authCode = driveConfig.get("auth-code", "")
-    if authCode is None or authCode == "":
-      url = gauth.GetAuthUrl()
-      print "This application have not access to your Google Drive. Yo need an access code from:"
-      print url
-      print "then copy and paste the code in \"auth-code\" in the outputs/google-drive section in your config.py file"
-      sys.exit(0)
+    # authCode = driveConfig.get("auth-code", "")
+    # if authCode is None or authCode == "":
+    #   url = gauth.GetAuthUrl()
+    #   print "This application have not access to your Google Drive. Yo need an access code from:"
+    #   print url
+    #   print "then copy and paste the code in \"auth-code\" in the outputs/google-drive section in your config.py file"
+    #   sys.exit(0)
 
     try:
-      gauth.Auth(authCode)
+      #gauth.Auth(authCode)
       drive = GoogleDrive(gauth)
     except Exception as e:
       print "Exception: " + str(e)
@@ -308,6 +309,3 @@ if jsonOutput:
     except Exception as e:
       print "ERROR saving json file: " + str(e)
       sys.exit(-1)
-
-
-
