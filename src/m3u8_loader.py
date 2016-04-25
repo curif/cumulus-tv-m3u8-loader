@@ -139,7 +139,7 @@ def validate(validation, url):
   cmd = Command(str.replace(validation["command"], "__file__", url),
                 killTimeoutCmd=validation.get("timeout-kill-command", None))
   ret = cmd.run(timeout=validation.get("timeout-secs", 3))
-  return ret in validation["return-code-error"]
+  return ret not in validation["return-code-error"]
 
 
 def process(m3u, provider, cumulustv, contStart=None):
