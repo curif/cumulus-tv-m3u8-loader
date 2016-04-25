@@ -62,6 +62,13 @@ Before write each `providers` section, you will need to study the m3u8 source to
         "family": "FAMILY_KIDS",
         "animal": "ANIMAL_WILDLIFE"
       },
+      "validation": {
+        "active": False,
+        "command": "avprobe \"__file__\"",
+        "return-code-error": [1, 256],
+        "timeout-secs": 3,
+        "timeout-kill-command": "killall -9 avprobe"
+      },
     },
     "MyGithubFileTest": {
       "active": True,
@@ -95,6 +102,12 @@ providers keys:
     * `lang`: language list. For example ["spanish"] will exclude others languages than spanish.
     * `country`: country list.
     * `group`: filter the `group-title` tag. For example a list `["movie", "news", "documentary"]` will exclude "adult" content.
+  * `validation`: all url in the stream will be checked, for example to check if is online or accessible.
+    * `active`: True or False. False to avoid validation.
+    * `command`: command to execute, __file__ will be replaced with the stream url.
+    * `return-code-error`: error codes array. If the command return value is one of this values, the stream is considered invalid.
+    * `timeout-secs`: Timeout in secs. Time to command execution.
+    * `timeout-kill-command`: a command to execute when the timeout is reached.
 
 ### outputs
 
@@ -120,17 +133,15 @@ The output can be a m3u8 file, a cumulus tv json file and a a cumulus tv json fi
   ```
   
 Please configure the `outputs` section as needed. The names are self explanatory.
-  
-### Google Drive
-  
-First time you run, and with `outputs/google-drive/active` in True, the program will require permission to access your google drive device. Please, cut and paste the url in the message in a browser and follow the steps. Finally cut the code and paste in `outputs/google-drive/auth-code`.
-  
-Example:
-  
-      This application have not access to your Google Drive. Yo need to obtain a access code from:
-      https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&redirect_uri=urn 
-      then copy and paste the code in "auth-code" in the output/google-drive section in your config.py file
 
+### Google Drive
+
+When `outputs/google-drive/active` is True, the program will try to upload the json file to your google drive account.
+Please, cut and paste the url in the message in a browser and follow the steps. Finally cut the response code in your browser and paste it in the command prompt.
+
+This program have not GUI, is designed to work in a remote CLI (may be in a ssh session), then is not possible to follow the methods usually used for user validation.
+
+In Cumulus TV the only way to obtain the json configuration file is via google drive.
 
 ## Contributing
 
