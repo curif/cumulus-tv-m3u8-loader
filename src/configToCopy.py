@@ -27,7 +27,7 @@ config = {
       },
       "validation": {
         "active": False,
-        "command": "avprobe __file__",
+        "command": "avprobe \"__file__\"",
         "return-code-error": [1, 256],
         "timeout-secs": 3,
         "timeout-kill-command": "killall -9 avprobe"
@@ -54,7 +54,7 @@ config = {
       },
       "validation": {
         "active": False,
-        "command": "avprobe __file__",
+        "command": "avprobe \"__file__\"",
         "return-code-error": [1, 256],
         "timeout-secs": 3,
         "timeout-kill-command": "killall -9 avprobe"
