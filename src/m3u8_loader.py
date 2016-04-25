@@ -299,7 +299,7 @@ for provider, providerData in config.config["providers"].iteritems():
 
       #pp.pprint(cumulustv)
 
-logging.info("END - Channels: " + str(startAt))
+logging.info("END - Channels loaded: " + str(len(urlCollector)))
 
 #write to file
 m3uFile = config.config["outputs"].get("m3u-file", None)
