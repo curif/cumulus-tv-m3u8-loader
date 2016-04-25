@@ -173,7 +173,7 @@ def process(m3u, provider, cumulustv, contStart=None):
         url = url.split(urlEndChar)[0]
 
       valid = True
-      if validation and "active" and validation.get("active", False):
+      if validation and validation.get("active", False):
         try:
           valid = validate(validation, url)
         except Exception as e:
@@ -226,7 +226,7 @@ def write2File(fd, cumulustv):
 #-------------------------------------------------------------------------------
 
 cumulustv = {"channels": [],
-             "timestamp": time.time()}
+             "timestamp": str(time.time())}
 startAt = 0  #first channel number - 1
 
 for provider, providerData in config.config["providers"].iteritems():
