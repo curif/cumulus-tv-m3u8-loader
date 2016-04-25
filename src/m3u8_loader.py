@@ -366,3 +366,5 @@ if jsonOutput:
     except Exception as e:
       logging.error("ERROR saving json file: " + str(e))
       sys.exit(-1)
+
+logging.info("END -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
