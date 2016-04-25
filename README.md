@@ -104,7 +104,7 @@ providers keys:
     * `group`: filter the `group-title` tag. For example a list `["movie", "news", "documentary"]` will exclude "adult" content.
   * `validation`: all url in the stream will be checked, for example to check if is online or accessible.
     * `active`: True or False. False to avoid validation.
-    * `command`: command to execute, __file__ will be replaced with the stream url.
+    * `command`: command to execute, `__file__` will be replaced with the stream url.
     * `return-code-error`: error codes array. If the command return value is one of this values, the stream is considered invalid.
     * `timeout-secs`: Timeout in secs. Time to command execution.
     * `timeout-kill-command`: a command to execute when the timeout is reached.
