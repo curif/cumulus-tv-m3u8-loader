@@ -97,7 +97,8 @@ def loadm3u(url):
   if not '#EXTM3U' in data:
     raise Exception(url + " is not a m3u8 file.")
 
-  return data.encode('utf-8')
+  #return data.encode('utf-8')
+  return data
 
 
 def regParse(parser, data):
@@ -234,7 +235,7 @@ for provider, providerData in config.config["providers"].iteritems():
     try:
       m3uContent = loadm3u(providerData["url"])
     except Exception as e:
-      print str(e)
+      print "error loading " + providerData["url"] + " - " + str(e)
     else:
       startAt = int(providerData.get("first-channel-number", startAt))
       startAt += process(m3uContent, provider, cumulustv, startAt)
