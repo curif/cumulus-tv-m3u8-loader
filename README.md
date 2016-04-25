@@ -33,7 +33,8 @@ Define the outputs as needed.
 ``` python
 { 
  "providers": {},
- "outputs": {}
+ "outputs": {},
+ "log": {}
 }
 ```
 * `providers`: define the access file/url, conversion and filters for the m3u8 load and parse. Multiple providers can be processed.
@@ -133,6 +134,24 @@ The output can be a m3u8 file, a cumulus tv json file and a a cumulus tv json fi
   ```
   
 Please configure the `outputs` section as needed. The names are self explanatory.
+
+### logging
+
+```python
+  "log": {
+    'file': "m3u_loader.log",
+    'level': 10,
+    'maxBytes': 500*1024,
+    'backupCount': 5
+  }
+```
+
+Establish logging file:
+
+  * `file`: file name
+  * `level`: python log level number
+  * `maxBytes`: max bytes per log
+  * `backupCount`: log rotation max file count.
 
 ### Google Drive
 

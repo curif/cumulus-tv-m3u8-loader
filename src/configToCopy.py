@@ -84,5 +84,12 @@ config = {
       "active": True,
       "file-name": "cumulus-tv-test.json"
     }
+  },
+
+  "log": {
+    'file': "m3u_loader.log",
+    'level': 10,
+    'maxBytes': 500*1024,
+    'backupCount': 5
   }
 }
