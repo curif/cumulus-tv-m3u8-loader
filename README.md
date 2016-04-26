@@ -37,8 +37,10 @@ Define the outputs as needed.
  "log": {}
 }
 ```
+
 * `providers`: define the access file/url, conversion and filters for the m3u8 load and parse. Multiple providers can be processed.
 * `outputs`: define file outputs and google drive saving information.
+* `log`: logging configuration.
 
 You can activate/deactivate configuration options using the `active` key (setting true or false).
 
@@ -101,6 +103,7 @@ Example:
     }
   },
 ```
+
 providers keys:
 
 * `fromArchive` name it as you wish, is a reference name.
@@ -112,13 +115,13 @@ providers keys:
     * `country`: country list.
     * `group`: filter the `group-title` tag. For example a list `["movie", "news", "documentary"]` will exclude "adult" content.
     * `names`: filter channel names
-      * `include`: array of string to verify, example ["horror", "home"] will match with "The horror channel" and with "home and health", this channels will be included.
+      * `include`: array of string to verify, example ["horror", "home"] will match with "The horror channel" and with "home and health", those channels will be included.
       * `exclude`: inverse of include.
   * `validation`: all url in the stream will be checked, for example to check if is online or accessible.
     * `active`: True or False. False to avoid validation.
     * `command`: command to execute, `__file__` will be replaced with the stream url.
     * `return-code-error`: error codes array. If the command return value is one of this values, the stream is considered invalid.
-    * `timeout-secs`: Timeout in secs. Time to command execution.
+    * `timeout-secs`: Timeout in secs. Time to wait the command execution end.
     * `timeout-kill-command`: a command to execute when the timeout is reached.
 
 ### outputs
