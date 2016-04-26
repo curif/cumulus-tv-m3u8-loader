@@ -174,17 +174,17 @@ def verifyFilters(filters, name, country, group, lang):
 
   filterCountry = filters.get("country", None)
   if filterCountry is not None:
-    if country is None or country not in filterCountry:
+    if country is None or country.lower() not in filterCountry:
       return False
 
   filterGroup = filters.get("group", None)
   if filterGroup is not None:
-    if group is None or group not in filterGroup:
+    if group is None or group.lower() not in filterGroup:
       return False
 
   filterLang = filters.get("lang", None)
   if filterLang is not None:
-    if lang is None or lang not in filterLang:
+    if lang is None or lang.lower() not in filterLang:
       return False
 
   filterName = filters.get("names", None)
