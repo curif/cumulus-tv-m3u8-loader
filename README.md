@@ -1,14 +1,17 @@
-# Cumulus TV m3u8 loader/uploader
+# Cumulus TV - IPTV Simple - m3u loader/uploader
 
-Is a m3u8 parser and conversor to cumulus-tv json file format for Google Drive, see: https://github.com/Fleker/CumulusTV 
+IPTV m3u list parser, conversor and uploader for Cumulus-tv and Kodi IPTV simple, see: https://github.com/Fleker/CumulusTV & https://github.com/kodi-pvr/pvr.iptvsimple
 
 ## Goals
 
-* Download multiple m3u8 files from your online providers.
-* Use multiple m3u8 files from your filesystem as well.
-* Can join/convert from your providers to one single m3u8 file or cumulus-tv json.
-* Can save cumulus-tv json file format to your filesystem, you can upload to your drive manually later.
-* You can automatically upload to your google drive (need app permissions, see below)
+* Download multiple m3u files from online providers.
+* Use multiple m3u files from your filesystem as well.
+* Filter channels, collect only required channels.
+* Validate online streams.
+* Group channels by configured criteria.
+* Save cumulus-tv json file format to your filesystem, you can upload to your drive manually later.
+* Output to m3u file.
+* Upload cumulust tv json file to google drive (need app permissions, see below)
 
 ## Install
 
@@ -20,7 +23,7 @@ Is a m3u8 parser and conversor to cumulus-tv json file format for Google Drive, 
 
 ## Configuration
 
-Modify src/config.py. Change the configuration to point to your m3u8 online providers o files in your filesystem.
+Modify src/config.py. Change the configuration to point to your m3u8 online providers or files in your filesystem.
 Define the outputs as needed.
 
 ## run
@@ -31,24 +34,24 @@ Define the outputs as needed.
 ### config.py structure:
 
 ``` python
-{ 
+config = {
  "providers": {},
  "outputs": {},
  "log": {}
 }
 ```
 
-* `providers`: define the access file/url, conversion and filters for the m3u8 load and parse. Multiple providers can be processed.
+* `providers`: define the access file/url to m3u playlists. Define conversion and filters channels. Multiple providers can be processed.
 * `outputs`: define file outputs and google drive saving information.
 * `log`: logging configuration.
 
-You can activate/deactivate configuration options using the `active` key (setting true or false).
+You can activate/deactivate configuration options using the `active` key (setting `True` or `False`).
 
 #### providers section
 
-#### Note:
+### Note:
 
-Before write each `providers` section, you will need to study the m3u8 source to understand what to add and what to exclude.
+Before write each `providers` section, you will need to study the m3u source to decide what to add and what to exclude.
 
 Example:
 
