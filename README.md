@@ -66,13 +66,13 @@ Example:
         "adult": "MOVIES",
         "family": "FAMILY_KIDS",
         "animal": "ANIMAL_WILDLIFE"
-      },,
+      },
       "genres-map-by-name": {
         "FOX": "MOVIES",
         "FX": "MOVIES",
         "CNN": "NEWS",
         "C5N": "NEWS",
-       }
+       },
       "validation": {
         "active": False,
         "command": "avprobe \"__file__\"",

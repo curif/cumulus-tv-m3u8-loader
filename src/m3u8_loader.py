@@ -149,7 +149,6 @@ def mapGenresByName(name, provider):
     genres = config.config["providers"][provider].get("genres-map-by-name", None)
     if genres:
       for partialName in genres.keys():
-        print partialName
         if partialName.lower() in name:
           ret = genres[partialName]
           break
@@ -261,7 +260,6 @@ def process(m3u, provider, cumulustv, contStart=None):
         contStart += 1
 
         genres = mapGenres(group, provider)
-        print "genre:" + genres
         if genres.strip() == "":
           genres = mapGenresByName(name, provider)
 
