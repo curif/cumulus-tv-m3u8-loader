@@ -131,7 +131,6 @@ The output can be a m3u8 file, a cumulus tv json file and a a cumulus tv json fi
     "google-drive": {
       "active": True,
       "file-name": "cumulus-tv-test.json",
-      "auth-code": ""
     },
     "m3u-file": {
       "active": True,
