@@ -11,6 +11,7 @@ import os
 import subprocess, threading
 import logging
 import logging.handlers
+import validators
 
 try:
   import config as config
@@ -141,6 +142,20 @@ def mapGenres(genre, provider):
   return ret
 
 
+def mapGenresByName(name, provider):
+  ret = ""
+  if name != "":
+    name = name.lower()
+    genres = config.config["providers"][provider].get("genres-map-by-name", None)
+    if genres:
+      for partialName in genres.keys():
+        print partialName
+        if partialName.lower() in name:
+          ret = genres[partialName]
+          break
+  return ret
+
+
 def possibleGenres(cumulustv):
   """
   all genres in channels
@@ -237,12 +252,23 @@ def process(m3u, provider, cumulustv, contStart=None):
       #avoid duplicates
       valid = valid and url not in urlCollector
 
+      #valid url
+      valid = valid and validators.url(url) == True
+
       logging.info(" - Channel: " + name + " - valid: " + str(valid) + " " + url)
 
       if valid:
         contStart += 1
 
         genres = mapGenres(group, provider)
+        print "genre:" + genres
+        if genres.strip() == "":
+          genres = mapGenresByName(name, provider)
+
+        #valid logo:
+        if logo is not None and logo != "":
+          if validators.url(logo) != True:
+            logo = None
 
         cumulusData = {
           "number": str(contStart),

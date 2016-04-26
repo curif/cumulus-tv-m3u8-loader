@@ -66,7 +66,13 @@ Example:
         "adult": "MOVIES",
         "family": "FAMILY_KIDS",
         "animal": "ANIMAL_WILDLIFE"
-      },
+      },,
+      "genres-map-by-name": {
+        "FOX": "MOVIES",
+        "FX": "MOVIES",
+        "CNN": "NEWS",
+        "C5N": "NEWS",
+       }
       "validation": {
         "active": False,
         "command": "avprobe \"__file__\"",
@@ -110,6 +116,7 @@ providers keys:
   * `url`: url/file to download/access the m3u8 data.
   * `m3u-url-endchar` some providers add extra information to stream url.
   * `genres-map`: dictionary that map the genres in the `group-title` EXTINF tag to a genre that android TV can understand. Please see http://developer.android.com/reference/android/media/tv/TvContract.Programs.Genres.html for a genres list.
+  * `genres-map-by-name`: assign a genre based on name substring, Example: {"GREAT": "MOVIES"}, assign the "MOVIES" genre to a channel named "the great channel".
   * `filters`: lists that filters the source EXTINF data. Only the data that cumpliments the list will be processed.
     * `lang`: language list. For example ["spanish"] will exclude others languages than spanish.
     * `country`: country list.
