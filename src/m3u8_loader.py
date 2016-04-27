@@ -36,7 +36,7 @@ pp = pprint.PrettyPrinter(indent=2)
 
 __author__ = 'curif'
 
-m3u_regex = '#(.+?),(.+)\s*(.+)\s*'
+m3u_regex = '(.+?),(.+)\s*(.+)\s*'
 name_regex = '.*?tvg-name=[\'"](.*?)[\'"]'
 group_regex = '.*?group-title=[\'"](.*?)[\'"]'
 logo_regex = '.*?tvg-logo=[\'"](.*?)[\'"]'
@@ -98,7 +98,7 @@ def loadm3u(url):
   response = urllib2.urlopen(req)
   data = response.read()
 
-  if not '#EXTM3U' in data:
+  if not 'EXTM3U' in data:
     raise Exception(url + " is not a m3u8 file.")
 
   #return data.encode('utf-8')
@@ -113,18 +113,18 @@ def regParse(parser, data):
   return None
 
 
-def filterByName(names, name):
+def filterByName(filterNames, name):
   """
   Verify channel name contains string
-  :param names: names array ["blah", "sese"]
+  :param filterNames: names array ["blah", "sese"]
   :param name: channel name "blah"
   :return: True if at least one element in array is part of string channel name.
   """
-  if len(names) == 0:
+  if len(filterNames) == 0:
     return True
 
   lowName = name.lower()
-  for n in names:
+  for n in filterNames:
     if n.lower() in lowName:
       return True
 
