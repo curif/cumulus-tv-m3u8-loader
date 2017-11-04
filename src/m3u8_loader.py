@@ -289,7 +289,7 @@ def process(m3u, provider, cumulustv, contStart=None):
   return contStart
 
 
-def write2File(fd, cumulustv):
+def dictToM3U(cumulustv):
   channels = cumulustv["channels"]
   channelDataMap = [
     ("number", "tvg-id"),
@@ -299,15 +299,19 @@ def write2File(fd, cumulustv):
     ("country", "tvg-country"),
     ("lang", "tvg-language")
   ]
-  fd.write("#EXTM3U\n")
+  m3uStr = "#EXTM3U\n"
   for channel in channels:
-    fd.write("#EXTINF:0 ")
+    m3uStr += "#EXTINF:-1"
     for dataId, extinfId in channelDataMap:
       if channel[dataId] is not None and channel[dataId] != "":
-        fd.write(" " + extinfId + "=\"" + channel[dataId].strip() + "\" ")
-    fd.write(", " + channel["name"].strip() + "\n")
-    fd.write(channel["url"] + "\n")
+        m3uStr += " " + extinfId + "=\"" + channel[dataId].strip() + "\""
+    m3uStr += "," + channel["name"].strip() + "\n"
+    m3uStr += channel["url"] + "\n"
 
+  return m3uStr
+
+def write2File(fd, cumulustv):
+  fd.write(dictToM3U(cumulustv))
   return
 
 
