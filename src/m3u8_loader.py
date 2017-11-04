@@ -301,11 +301,11 @@ def write2File(fd, cumulustv):
   ]
   fd.write("#EXTM3U\n")
   for channel in channels:
-    fd.write("#EXTINF:0 ")
+    fd.write("#EXTINF:-1")
     for dataId, extinfId in channelDataMap:
       if channel[dataId] is not None and channel[dataId] != "":
-        fd.write(" " + extinfId + "=\"" + channel[dataId].strip() + "\" ")
-    fd.write(", " + channel["name"].strip() + "\n")
+        fd.write(" " + extinfId + "=\"" + channel[dataId].strip() + "\"")
+    fd.write("," + channel["name"].strip() + "\n")
     fd.write(channel["url"] + "\n")
 
   return
