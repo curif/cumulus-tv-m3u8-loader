@@ -138,8 +138,8 @@ def mapGenres(genre, provider):
     genres = config.config["providers"][provider].get("genres-map", None)
     if genres:
       if genre in genres:
-        ret = genres[genre]
-  return ret
+        return genres[genre] # only override genres when map provided
+  return genre # leave default genres as-is
 
 
 def mapGenresByName(name, provider):
