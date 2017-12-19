@@ -11,7 +11,8 @@ IPTV m3u list parser, conversor and uploader for Cumulus-tv and Kodi IPTV simple
 * Group channels by configured criteria.
 * Save cumulus-tv json file format to your filesystem, you can upload to your drive manually later.
 * Output to m3u file.
-* Upload cumulust tv json file to google drive (need app permissions, see below)
+* Upload cumulus tv json file to google drive (need app permissions, see below)
+* Upload cumulus tv m3u file to S3
 
 ## Install
 
@@ -152,6 +153,10 @@ The output can be a m3u8 file, a cumulus tv json file and a a cumulus tv json fi
     "json-file": {
       "active": True,
       "file-name": "cumulus-tv-test.json"
+    },
+    "s3": {
+      "active": True,
+      "file-name": "bucket-name/cumulus-tv-test.m3u"
     }
   }
   ```
@@ -184,6 +189,10 @@ Please, cut and paste the url in the message in a browser and follow the steps. 
 This program have not GUI, is designed to work in a remote CLI (may be in a ssh session), then is not possible to follow the methods usually used for user validation.
 
 In Cumulus TV the only way to obtain the json configuration file is via google drive.
+
+### AWS S3
+
+When `outputs/s3/active` is True, the program will try to upload the m3u file to your AWS S3 account.
 
 ## Contributing
 
