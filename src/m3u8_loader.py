@@ -289,7 +289,7 @@ def process(m3u, provider, cumulustv, contStart=None):
   return contStart
 
 
-def write2File(fd, cumulustv):
+def dictToM3U(cumulustv):
   channels = cumulustv["channels"]
   channelDataMap = [
     ("number", "tvg-id"),
@@ -299,15 +299,19 @@ def write2File(fd, cumulustv):
     ("country", "tvg-country"),
     ("lang", "tvg-language")
   ]
-  fd.write("#EXTM3U\n")
+  m3uStr = "#EXTM3U\n"
   for channel in channels:
-    fd.write("#EXTINF:-1")
+    m3uStr += "#EXTINF:-1"
     for dataId, extinfId in channelDataMap:
       if channel[dataId] is not None and channel[dataId] != "":
-        fd.write(" " + extinfId + "=\"" + channel[dataId].strip() + "\"")
-    fd.write("," + channel["name"].strip() + "\n")
-    fd.write(channel["url"] + "\n")
+        m3uStr += " " + extinfId + "=\"" + channel[dataId].strip() + "\""
+    m3uStr += "," + channel["name"].strip() + "\n"
+    m3uStr += channel["url"] + "\n"
 
+  return m3uStr
+
+def write2File(fd, cumulustv):
+  fd.write(dictToM3U(cumulustv))
   return
 
 
@@ -339,6 +343,39 @@ def logStart():
 
   return
 
+
+def uploadS3(filename, contents):
+  import io
+  import boto3
+  from cStringIO import StringIO
+
+  session = boto3.Session()
+  credentials = session.get_credentials()
+
+  # Credentials are refreshable, so accessing your access key / secret key
+  # separately can lead to a race condition. Use this to get an actual matched
+  # set.
+  credentials = credentials.get_frozen_credentials()
+  access_key = credentials.access_key
+  secret_key = credentials.secret_key
+
+  s3 = boto3.resource(
+    's3',
+    aws_access_key_id=access_key,
+    aws_secret_access_key=secret_key
+  )
+
+  fake_handle = StringIO(contents)
+
+  bucket, filename_only = filename.split('/')
+
+  # notice if you do fake_handle.read() it reads like a file handle
+  file = s3.Bucket(bucket).put_object(
+    Key=filename_only,
+    Body=fake_handle.read(),
+    ContentType='text/plain',
+    ACL='public-read'
+  )
 
 #-------------------------------------------------------------------------------
 # process
@@ -387,6 +424,18 @@ if m3uFile:
         write2File(fd, cumulustv)
     except Exception as e:
       logging.error("can't open/write file: " + str(e))
+      sys.exit(-1)
+
+#write to s3
+s3File = config.config["outputs"].get("s3", None)
+if s3File:
+  if s3File.get("active", False):
+    try:
+      fileName = s3File["file-name"]
+      logging.info("Write to s3 file:" + fileName)
+      uploadS3(s3File["file-name"], dictToM3U(cumulustv))
+    except Exception as e:
+      logging.error("can't open/write file to s3: " + str(e))
       sys.exit(-1)
 
 #send to DRIVE
