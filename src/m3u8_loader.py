@@ -132,14 +132,12 @@ def filterByName(filterNames, name):
 
 
 def mapGenres(genre, provider):
-  ret = ""
   if genre:
     genre = genre.lower()
     genres = config.config["providers"][provider].get("genres-map", None)
-    if genres:
-      if genre in genres:
-        ret = genres[genre]
-  return ret or ""
+    if genres and genre in genres:
+      return genres[genre]
+  return genre or ""
 
 
 def mapGenresByName(name, provider):
