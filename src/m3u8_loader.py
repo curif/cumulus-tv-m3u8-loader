@@ -139,7 +139,7 @@ def mapGenres(genre, provider):
     if genres:
       if genre in genres:
         ret = genres[genre]
-  return ret
+  return ret or ""
 
 
 def mapGenresByName(name, provider):
@@ -152,7 +152,7 @@ def mapGenresByName(name, provider):
         if partialName.lower() in name:
           ret = genres[partialName]
           break
-  return ret
+  return ret or ""
 
 
 def possibleGenres(cumulustv):
