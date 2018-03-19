@@ -132,14 +132,12 @@ def filterByName(filterNames, name):
 
 
 def mapGenres(genre, provider):
-  ret = ""
   if genre:
     genre = genre.lower()
     genres = config.config["providers"][provider].get("genres-map", None)
-    if genres:
-      if genre in genres:
-        return genres[genre] # only override genres when map provided
-  return genre # leave default genres as-is
+    if genres and genre in genres:
+      return genres[genre]
+  return genre or ""
 
 
 def mapGenresByName(name, provider):
@@ -152,7 +150,7 @@ def mapGenresByName(name, provider):
         if partialName.lower() in name:
           ret = genres[partialName]
           break
-  return ret
+  return ret or ""
 
 
 def possibleGenres(cumulustv):
